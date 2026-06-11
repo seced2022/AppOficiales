@@ -4,90 +4,247 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login - Bolsa de Oficiales</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
 <style>
-:root{--blue:#0b6bff;--blue-dark:#0649bd;--soft:#eaf3ff;--white:#fff;--text:#0f172a;--muted:#5f6f89;--line:#dce8f7}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:linear-gradient(135deg,#eaf4ff,#fff);display:flex;align-items:center;justify-content:center;padding:20px;color:var(--text)}
-.login-wrapper{width:100%;max-width:1050px;display:grid;grid-template-columns:1fr 430px;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:34px;overflow:hidden;box-shadow:0 25px 70px rgba(28,89,164,.16)}
-.brand{background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:white;padding:48px;display:flex;flex-direction:column;justify-content:space-between;min-height:620px}
-.logo-box{width:260px;height:108px;border-radius:20px;background:#020617;overflow:hidden;box-shadow:0 20px 44px rgba(0,0,0,.28),0 0 0 6px rgba(255,255,255,.10)}
-.logo-box img{width:100%;height:100%;object-fit:cover}
-.brand h1{font-size:2.6rem;margin:34px 0 10px}.brand p{font-size:1.15rem;opacity:.88;max-width:420px;line-height:1.55}
-.brand-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.brand-stats div{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.18);border-radius:18px;padding:16px}.brand-stats strong{display:block;font-size:1.7rem}
-.panel{padding:42px;background:white}.tabs{display:flex;gap:10px;background:#f1f6ff;padding:7px;border-radius:18px;margin-bottom:28px}
-.tabs button{flex:1;border:0;padding:13px;border-radius:14px;background:transparent;color:#49627f;font-weight:900;cursor:pointer}.tabs button.active{background:white;color:var(--blue);box-shadow:0 8px 18px rgba(26,75,140,.10)}
-.form-title h2{margin:0;font-size:1.75rem}.form-title p{margin:8px 0 24px;color:var(--muted)}
-label{display:block;font-weight:850;margin:14px 0 8px}
-input,select{width:100%;border:1px solid var(--line);background:#f8fbff;border-radius:15px;padding:15px;font-size:1rem;outline:none}
-input:focus,select:focus{border-color:var(--blue);background:white;box-shadow:0 0 0 4px rgba(11,107,255,.10)}
-.primary-btn{width:100%;border:0;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:white;padding:16px;margin-top:22px;font-size:1rem;font-weight:950;cursor:pointer;box-shadow:0 16px 30px rgba(11,107,255,.26)}
-.notice{margin-top:18px;padding:13px;border-radius:14px;display:none;font-weight:800}.notice.ok{display:block;background:#e8f9ee;color:#138437}.notice.error{display:block;background:#fff0f0;color:#c82121}.hidden{display:none}
-.back{display:inline-flex;align-items:center;gap:8px;color:#49627f;text-decoration:none;font-weight:850;margin-top:24px}
-@media(max-width:880px){.login-wrapper{grid-template-columns:1fr}.brand{min-height:auto;padding:30px}.brand h1{font-size:2rem}.brand-stats{grid-template-columns:1fr}.panel{padding:28px}}
+:root{
+    --blue:#0b6bff;
+    --blue-dark:#0649bd;
+    --line:#dce8f7;
+    --text:#0f172a;
+    --muted:#5f6f89;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:linear-gradient(135deg,#eaf4ff,#ffffff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-wrapper{
+    width:100%;
+    max-width:1050px;
+    display:grid;
+    grid-template-columns:1fr 430px;
+    background:white;
+    border-radius:34px;
+    overflow:hidden;
+    box-shadow:0 25px 70px rgba(28,89,164,.16);
+}
+
+.brand{
+    background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+    color:white;
+    padding:48px;
+}
+
+.logo-box{
+    width:260px;
+    height:108px;
+    border-radius:20px;
+    overflow:hidden;
+    background:#000;
+}
+
+.logo-box img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.brand h1{
+    margin-top:30px;
+    font-size:2.5rem;
+}
+
+.panel{
+    padding:42px;
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    background:#f1f6ff;
+    padding:7px;
+    border-radius:18px;
+    margin-bottom:28px;
+}
+
+.tabs button{
+    flex:1;
+    border:none;
+    padding:13px;
+    border-radius:14px;
+    background:transparent;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.tabs button.active{
+    background:white;
+    color:var(--blue);
+}
+
+label{
+    display:block;
+    margin-top:14px;
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+input,select{
+    width:100%;
+    padding:14px;
+    border-radius:14px;
+    border:1px solid var(--line);
+}
+
+.primary-btn{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    border-radius:16px;
+    color:white;
+    cursor:pointer;
+    font-weight:800;
+    background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+}
+
+.notice{
+    margin-top:15px;
+    padding:12px;
+    border-radius:12px;
+    display:none;
+}
+
+.notice.ok{
+    display:block;
+    background:#e8f9ee;
+    color:#138437;
+}
+
+.notice.error{
+    display:block;
+    background:#fff0f0;
+    color:#c82121;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.back{
+    display:inline-block;
+    margin-top:25px;
+    text-decoration:none;
+}
+
+@media(max-width:880px){
+    .login-wrapper{
+        grid-template-columns:1fr;
+    }
+}
 </style>
 </head>
+
 <body>
+
 <div class="login-wrapper">
-<section class="brand">
-<div>
-<div class="logo-box"><img src="img/logo_g6k.jpg" alt="G6K"></div>
-<h1>Bolsa de Oficiales</h1>
-<p>Acceso seguro para federación, organizadores y oficiales. Gestión por ID anónimo, zonas geográficas y convocatorias por cercanía.</p>
+
+    <section class="brand">
+
+        <div class="logo-box">
+            <img src="img/logo_g6k.jpg" alt="Logo">
+        </div>
+
+        <h1>Bolsa de Oficiales</h1>
+
+        <p>
+            Gestión de oficiales, organizadores y convocatorias.
+        </p>
+
+    </section>
+
+    <section class="panel">
+
+        <div class="tabs">
+            <button id="tabLogin" class="active" type="button">Entrar</button>
+            <button id="tabRegister" type="button">Registro</button>
+        </div>
+
+        <!-- LOGIN -->
+
+        <div id="loginForm">
+
+            <h2>Iniciar sesión</h2>
+
+            <label>Email</label>
+            <input type="email" id="loginEmail">
+
+            <label>Contraseña</label>
+            <input type="password" id="loginPassword">
+
+            <button class="primary-btn" id="btnLogin" type="button">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Entrar
+            </button>
+
+            <div id="loginNotice" class="notice"></div>
+
+        </div>
+
+        <!-- REGISTRO -->
+
+        <div id="registerForm" class="hidden">
+
+            <h2>Crear usuario</h2>
+
+            <label>Nombre</label>
+            <input type="text" id="registerName">
+
+            <label>Email</label>
+            <input type="email" id="registerEmail">
+
+            <label>Contraseña</label>
+            <input type="password" id="registerPassword">
+
+            <label>Rol</label>
+            <select id="registerRole">
+                <option value="oficial">Oficial</option>
+                <option value="organizador">Organizador</option>
+                <option value="admin">Administrador</option>
+            </select>
+
+            <button class="primary-btn" id="btnRegister" type="button">
+                <i class="bi bi-person-plus"></i>
+                Crear cuenta
+            </button>
+
+            <div id="registerNotice" class="notice"></div>
+
+        </div>
+
+        <a class="back" href="index.html">
+            ← Volver al inicio
+        </a>
+
+    </section>
+
 </div>
-<div class="brand-stats">
-<div><strong>128</strong>Oficiales</div>
-<div><strong>18</strong>Pruebas</div>
-<div><strong>32</strong>Pendientes</div>
-</div>
-</section>
-<section class="panel">
-<div class="tabs">
-<button id="tabLogin" class="active" type="button">Entrar</button>
-<button id="tabRegister" type="button">Registro</button>
-</div>
-<div id="loginForm">
-<div class="form-title"><h2>Iniciar sesión</h2><p>Accede con tu email y contraseña.</p></div>
-<label>Email</label><input type="email" id="loginEmail" placeholder="correo@ejemplo.com">
-<label>Contraseña</label><input type="password" id="loginPassword" placeholder="Contraseña">
-<button class="primary-btn" id="btnRegister" type="button">
-    <i class="bi bi-person-plus"></i> Crear cuenta
-</button>
-<div id="loginNotice" class="notice"></div>
-</div>
-<div id="registerForm" class="hidden">
 
-<div class="form-title">
-    <h2>Crear usuario</h2>
-    <p>Alta inicial con rol de acceso.</p>
-</div>
-
-<label>Nombre</label>
-<input type="text" id="registerName" placeholder="Nombre completo">
-
-<label>Email</label>
-<input type="email" id="registerEmail" placeholder="correo@ejemplo.com">
-
-<label>Contraseña</label>
-<input type="password" id="registerPassword" placeholder="Mínimo 6 caracteres">
-
-<label>Rol</label>
-<select id="registerRole">
-    <option value="oficial">Oficial</option>
-    <option value="organizador">Organizador</option>
-    <option value="admin">Administrador Federación</option>
-</select>
-
-<button class="primary-btn" id="btnRegister" type="button">
-    <i class="bi bi-person-plus"></i> Crear cuenta
-</button>
-
-<div id="registerNotice" class="notice"></div>
-
-</div>
-<a class="back" href="index.html"><i class="bi bi-arrow-left"></i> Volver al inicio</a>
-</section>
-</div>
 <script type="module" src="js/login.js"></script>
+
 </body>
 </html>
+```
