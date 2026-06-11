@@ -1,6 +1,30 @@
 import { auth, db } from "./firebase-config.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-import { doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+import {
+    doc,
+    setDoc,
+    getDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const tabLogin = document.getElementById("tabLogin");
+    const tabRegister = document.getElementById("tabRegister");
+    const btnLogin = document.getElementById("btnLogin");
+    const btnRegister = document.getElementById("btnRegister");
+
+    if (tabLogin) tabLogin.addEventListener("click", showLogin);
+    if (tabRegister) tabRegister.addEventListener("click", showRegister);
+    if (btnLogin) btnLogin.addEventListener("click", loginUser);
+    if (btnRegister) btnRegister.addEventListener("click", registerUser);
+
+    console.log("login.js cargado correctamente");
+});
 
 function showLogin(){
     document.getElementById("loginForm").classList.remove("hidden");
@@ -18,6 +42,7 @@ function showRegister(){
 
 function showNotice(id, message, type){
     const box = document.getElementById(id);
+    if (!box) return;
     box.textContent = message;
     box.className = "notice " + type;
 }
@@ -62,11 +87,14 @@ async function registerUser(){
         });
 
         showNotice("registerNotice", "Usuario creado correctamente. Redirigiendo...", "ok");
-        setTimeout(() => redirectByRole(rol), 900);
+
+        setTimeout(() => {
+            redirectByRole(rol);
+        }, 900);
 
     }catch(error){
-        showNotice("registerNotice", traducirError(error.code), "error");
         console.error(error);
+        showNotice("registerNotice", traducirError(error.code), "error");
     }
 }
 
@@ -99,11 +127,14 @@ async function loginUser(){
         }
 
         showNotice("loginNotice", "Acceso correcto. Redirigiendo...", "ok");
-        setTimeout(() => redirectByRole(data.rol), 700);
+
+        setTimeout(() => {
+            redirectByRole(data.rol);
+        }, 700);
 
     }catch(error){
-        showNotice("loginNotice", traducirError(error.code), "error");
         console.error(error);
+        showNotice("loginNotice", traducirError(error.code), "error");
     }
 }
 
@@ -117,6 +148,7 @@ function traducirError(code){
         "auth/invalid-credential": "Email o contraseña incorrectos.",
         "permission-denied": "No tienes permisos en Firestore. Revisa las reglas."
     };
+
     return errores[code] || "Error: " + code;
 }
 
