@@ -9,10 +9,7 @@
 :root{
     --azul:#0b6bff;
     --azul-oscuro:#063c8f;
-    --fondo:#eef6ff;
-    --blanco:#ffffff;
     --texto:#102033;
-    --gris:#667085;
 }
 
 *{
@@ -141,17 +138,13 @@ input, select{
     cursor:pointer;
 }
 
-.boton:hover{
-    opacity:.92;
-}
-
 .boton:disabled{
     opacity:.6;
     cursor:not-allowed;
 }
 
 .oculto{
-    display:none;
+    display:none !important;
 }
 
 .aviso{
@@ -211,7 +204,7 @@ input, select{
 
         <p>
             Acceso para federación, organizadores y oficiales.
-            En este paso el registro ya se guarda en Firebase.
+            Registro conectado a Firebase.
         </p>
     </section>
 
@@ -222,7 +215,6 @@ input, select{
             <button id="btnTabRegistro" type="button">Registro</button>
         </div>
 
-        <!-- FORMULARIO LOGIN -->
         <div id="formLogin">
             <h2>Iniciar sesión</h2>
 
@@ -237,7 +229,6 @@ input, select{
             <div class="aviso" id="avisoLogin"></div>
         </div>
 
-        <!-- FORMULARIO REGISTRO -->
         <div id="formRegistro" class="oculto">
             <h2>Crear cuenta</h2>
 
@@ -267,6 +258,27 @@ input, select{
     </section>
 
 </div>
+
+<script>
+const btnTabLogin = document.getElementById("btnTabLogin");
+const btnTabRegistro = document.getElementById("btnTabRegistro");
+const formLogin = document.getElementById("formLogin");
+const formRegistro = document.getElementById("formRegistro");
+
+btnTabLogin.addEventListener("click", function(){
+    formLogin.classList.remove("oculto");
+    formRegistro.classList.add("oculto");
+    btnTabLogin.classList.add("activo");
+    btnTabRegistro.classList.remove("activo");
+});
+
+btnTabRegistro.addEventListener("click", function(){
+    formLogin.classList.add("oculto");
+    formRegistro.classList.remove("oculto");
+    btnTabLogin.classList.remove("activo");
+    btnTabRegistro.classList.add("activo");
+});
+</script>
 
 <script type="module" src="js/login-firebase.js"></script>
 
