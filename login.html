@@ -145,6 +145,11 @@ input, select{
     opacity:.92;
 }
 
+.boton:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
 .oculto{
     display:none;
 }
@@ -156,6 +161,17 @@ input, select{
     background:#eaf3ff;
     color:#063c8f;
     display:none;
+    font-weight:bold;
+}
+
+.aviso.ok{
+    background:#e9f9ef;
+    color:#137a34;
+}
+
+.aviso.error{
+    background:#fff0f0;
+    color:#c82121;
 }
 
 .volver{
@@ -195,7 +211,7 @@ input, select{
 
         <p>
             Acceso para federación, organizadores y oficiales.
-            Primero construiremos el login de forma limpia y después conectaremos Firebase.
+            En este paso el registro ya se guarda en Firebase.
         </p>
     </section>
 
@@ -206,6 +222,7 @@ input, select{
             <button id="btnTabRegistro" type="button">Registro</button>
         </div>
 
+        <!-- FORMULARIO LOGIN -->
         <div id="formLogin">
             <h2>Iniciar sesión</h2>
 
@@ -220,6 +237,7 @@ input, select{
             <div class="aviso" id="avisoLogin"></div>
         </div>
 
+        <!-- FORMULARIO REGISTRO -->
         <div id="formRegistro" class="oculto">
             <h2>Crear cuenta</h2>
 
@@ -250,41 +268,7 @@ input, select{
 
 </div>
 
-<script>
-const btnTabLogin = document.getElementById("btnTabLogin");
-const btnTabRegistro = document.getElementById("btnTabRegistro");
-
-const formLogin = document.getElementById("formLogin");
-const formRegistro = document.getElementById("formRegistro");
-
-btnTabLogin.addEventListener("click", function(){
-    formLogin.classList.remove("oculto");
-    formRegistro.classList.add("oculto");
-
-    btnTabLogin.classList.add("activo");
-    btnTabRegistro.classList.remove("activo");
-});
-
-btnTabRegistro.addEventListener("click", function(){
-    formLogin.classList.add("oculto");
-    formRegistro.classList.remove("oculto");
-
-    btnTabLogin.classList.remove("activo");
-    btnTabRegistro.classList.add("activo");
-});
-
-document.getElementById("btnEntrar").addEventListener("click", function(){
-    const aviso = document.getElementById("avisoLogin");
-    aviso.style.display = "block";
-    aviso.innerText = "De momento este botón solo prueba el diseño. En el siguiente paso conectaremos Firebase.";
-});
-
-document.getElementById("btnCrearCuenta").addEventListener("click", function(){
-    const aviso = document.getElementById("avisoRegistro");
-    aviso.style.display = "block";
-    aviso.innerText = "Formulario correcto. En el siguiente paso guardaremos este usuario en Firebase.";
-});
-</script>
+<script type="module" src="js/login-firebase.js"></script>
 
 </body>
 </html>
