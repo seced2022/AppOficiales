@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bolsa de Oficiales</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+
 <div class="app">
 
     <aside class="sidebar" id="sidebar">
@@ -29,26 +31,36 @@
     </aside>
 
     <main class="main">
+
         <header class="topbar">
             <button class="icon-btn" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
 
             <div>
                 <h1>Bolsa de Oficiales</h1>
-                <p>Temporada 2026 · Panel federativo</p>
+                <p id="welcomeText">Conectando con Firebase...</p>
             </div>
 
             <div class="top-actions">
-                <button class="icon-btn"><i class="bi bi-bell"></i><b>3</b></button>
-                <button class="icon-btn"><i class="bi bi-envelope"></i><b>5</b></button>
-                <button class="user-btn"><i class="bi bi-person-circle"></i><span>Administrador</span></button>
+                <button class="icon-btn"><i class="bi bi-bell"></i><b id="notificacionesNum">0</b></button>
+                <button class="icon-btn"><i class="bi bi-envelope"></i><b id="mensajesNum">0</b></button>
+
+                <button class="user-btn" id="userButton" onclick="goLogin()">
+                    <i class="bi bi-person-circle"></i>
+                    <span id="userName">Entrar</span>
+                </button>
+
+                <button class="icon-btn" id="logoutBtn" onclick="logoutUser()" title="Cerrar sesión" style="display:none;">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
             </div>
         </header>
 
         <section class="hero-card">
             <div>
                 <h2>Gestión inteligente de oficiales</h2>
-                <p>Organiza pruebas, convoca oficiales por cercanía y controla disponibilidad por zona geográfica.</p>
+                <p id="heroText">Accede para gestionar oficiales, pruebas y convocatorias por cercanía.</p>
             </div>
+
             <button class="primary-btn" onclick="openModal('modalConvocatoria')">
                 <i class="bi bi-send-check"></i> Nueva convocatoria
             </button>
@@ -81,38 +93,56 @@
         </section>
 
         <section class="stats-grid">
-            <div class="stat-card"><i class="bi bi-people-fill"></i><div><strong>128</strong><span>Oficiales activos</span><small class="green">↑ 12%</small></div></div>
-            <div class="stat-card"><i class="bi bi-flag-fill"></i><div><strong>18</strong><span>Pruebas programadas</span><small class="green">↑ 8%</small></div></div>
-            <div class="stat-card"><i class="bi bi-megaphone"></i><div><strong>32</strong><span>Convocatorias pendientes</span><small class="orange">↑ 15%</small></div></div>
-            <div class="stat-card"><i class="bi bi-check-circle"></i><div><strong>76</strong><span>Confirmadas</span><small class="green">↑ 10%</small></div></div>
+            <div class="stat-card">
+                <i class="bi bi-people-fill"></i>
+                <div>
+                    <strong id="statOficiales">0</strong>
+                    <span>Oficiales activos</span>
+                    <small class="green">Firestore</small>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <i class="bi bi-flag-fill"></i>
+                <div>
+                    <strong id="statPruebas">0</strong>
+                    <span>Pruebas programadas</span>
+                    <small class="green">Firestore</small>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <i class="bi bi-megaphone"></i>
+                <div>
+                    <strong id="statPendientes">0</strong>
+                    <span>Convocatorias pendientes</span>
+                    <small class="orange">Pendientes</small>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <i class="bi bi-check-circle"></i>
+                <div>
+                    <strong id="statConfirmadas">0</strong>
+                    <span>Confirmadas</span>
+                    <small class="green">Aceptadas</small>
+                </div>
+            </div>
         </section>
 
         <section class="dashboard-grid">
+
             <div class="panel">
                 <div class="panel-head">
                     <h3>Próximas pruebas</h3>
                     <a href="pages/pruebas.html">Ver todas</a>
                 </div>
 
-                <div class="event-row">
-                    <div class="date"><span>JUN</span>22</div>
-                    <div><strong>Rally Villa de Llanes</strong><small>Llanes, Asturias</small></div>
-                    <em>Oficiales: 12/15</em>
-                    <i class="bi bi-chevron-right"></i>
-                </div>
-
-                <div class="event-row">
-                    <div class="date"><span>JUN</span>29</div>
-                    <div><strong>Subida al Fito</strong><small>Arriondas, Asturias</small></div>
-                    <em>Oficiales: 8/10</em>
-                    <i class="bi bi-chevron-right"></i>
-                </div>
-
-                <div class="event-row">
-                    <div class="date"><span>JUL</span>06</div>
-                    <div><strong>Rallye Princesa de Asturias</strong><small>Oviedo, Asturias</small></div>
-                    <em>Oficiales: 20/25</em>
-                    <i class="bi bi-chevron-right"></i>
+                <div id="listaPruebas">
+                    <div class="empty-state">
+                        <i class="bi bi-cloud-arrow-down"></i>
+                        <p>Cargando pruebas desde Firebase...</p>
+                    </div>
                 </div>
             </div>
 
@@ -127,14 +157,16 @@
                     <span class="city gijon">Gijón</span>
                     <span class="city oviedo">Oviedo</span>
                     <span class="city llanes">Llanes</span>
-                    <span class="marker m1">12</span>
-                    <span class="marker m2">28</span>
-                    <span class="marker m3">15</span>
-                    <span class="marker m4">18</span>
-                    <span class="marker m5">10</span>
+                    <span class="marker m1" id="zonaAviles">0</span>
+                    <span class="marker m2" id="zonaOviedo">0</span>
+                    <span class="marker m3" id="zonaGijon">0</span>
+                    <span class="marker m4" id="zonaLlanes">0</span>
+                    <span class="marker m5" id="zonaOriente">0</span>
                 </div>
             </div>
+
         </section>
+
     </main>
 </div>
 
@@ -142,11 +174,22 @@
     <div class="modal-box">
         <button class="close" onclick="closeModal('modalOficial')">×</button>
         <h2>Nuevo Oficial</h2>
-        <input placeholder="ID automático: OF-0001" disabled>
-        <input placeholder="Nombre completo">
-        <input placeholder="Municipio">
-        <select><option>Categoría</option><option>Cronometrador</option><option>Comisario de ruta</option><option>Jefe de tramo</option></select>
-        <button class="primary-btn">Guardar oficial</button>
+
+        <input id="oficialNombre" placeholder="Nombre completo">
+        <input id="oficialEmail" placeholder="Email">
+        <input id="oficialMunicipio" placeholder="Municipio">
+        <input id="oficialProvincia" placeholder="Provincia" value="Asturias">
+
+        <select id="oficialCategoria">
+            <option value="">Categoría</option>
+            <option value="Cronometrador">Cronometrador</option>
+            <option value="Comisario de ruta">Comisario de ruta</option>
+            <option value="Jefe de tramo">Jefe de tramo</option>
+            <option value="Comisario técnico">Comisario técnico</option>
+        </select>
+
+        <button class="primary-btn" onclick="guardarOficial()">Guardar oficial</button>
+        <div id="noticeOficial" class="modal-notice"></div>
     </div>
 </div>
 
@@ -154,11 +197,14 @@
     <div class="modal-box">
         <button class="close" onclick="closeModal('modalPrueba')">×</button>
         <h2>Nueva Prueba</h2>
-        <input placeholder="Nombre de la prueba">
-        <input type="date">
-        <input placeholder="Municipio">
-        <input placeholder="Provincia">
-        <button class="primary-btn">Crear prueba</button>
+
+        <input id="pruebaNombre" placeholder="Nombre de la prueba">
+        <input id="pruebaFecha" type="date">
+        <input id="pruebaMunicipio" placeholder="Municipio">
+        <input id="pruebaProvincia" placeholder="Provincia" value="Asturias">
+
+        <button class="primary-btn" onclick="guardarPrueba()">Crear prueba</button>
+        <div id="noticePrueba" class="modal-notice"></div>
     </div>
 </div>
 
@@ -166,10 +212,23 @@
     <div class="modal-box">
         <button class="close" onclick="closeModal('modalConvocatoria')">×</button>
         <h2>Nueva Convocatoria</h2>
-        <select><option>Seleccionar prueba</option><option>Rally Villa de Llanes</option><option>Subida al Fito</option></select>
-        <select><option>Tipo de oficial</option><option>Cronometrador</option><option>Comisario de ruta</option></select>
-        <input type="number" placeholder="Cantidad necesaria">
-        <button class="primary-btn">Buscar por cercanía</button>
+
+        <select id="convocatoriaPrueba">
+            <option value="">Seleccionar prueba</option>
+        </select>
+
+        <select id="convocatoriaCategoria">
+            <option value="">Tipo de oficial</option>
+            <option value="Cronometrador">Cronometrador</option>
+            <option value="Comisario de ruta">Comisario de ruta</option>
+            <option value="Jefe de tramo">Jefe de tramo</option>
+            <option value="Comisario técnico">Comisario técnico</option>
+        </select>
+
+        <input id="convocatoriaCantidad" type="number" placeholder="Cantidad necesaria">
+
+        <button class="primary-btn" onclick="guardarConvocatoria()">Crear convocatoria</button>
+        <div id="noticeConvocatoria" class="modal-notice"></div>
     </div>
 </div>
 
