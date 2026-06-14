@@ -4,62 +4,401 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel Organizador - Bolsa de Oficiales</title>
+
 <style>
-:root{--azul:#0b6bff;--azul-oscuro:#063c8f;--texto:#102033;--borde:#d8e3f0;--verde:#137a34;--rojo:#c82121}
+:root{
+    --azul:#0b6bff;
+    --azul-oscuro:#063c8f;
+    --fondo:#eef6ff;
+    --texto:#102033;
+    --gris:#667085;
+    --borde:#d8e3f0;
+    --verde:#137a34;
+    --rojo:#c82121;
+}
+
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(135deg,#e8f3ff,#fff);color:var(--texto)}
-.app{max-width:1250px;margin:auto;padding:25px}.layout{display:grid;grid-template-columns:260px 1fr;gap:24px}
-.sidebar,.card{background:white;border:1px solid var(--borde);border-radius:26px;padding:24px;box-shadow:0 12px 35px rgba(0,70,160,.10)}
-.logo,.cabecera{background:linear-gradient(135deg,var(--azul),var(--azul-oscuro));color:white;border-radius:22px;padding:24px;margin-bottom:22px}
-.logo h2,.cabecera h1{margin:0}.logo p,.cabecera p{margin:6px 0 0;opacity:.9}
-.menu a,.menu button{width:100%;display:block;text-align:left;border:0;background:#f5f9ff;color:var(--texto);padding:14px;border-radius:14px;margin-bottom:10px;font-weight:bold;text-decoration:none;cursor:pointer}
-.menu a.activo{background:linear-gradient(135deg,var(--azul),var(--azul-oscuro));color:white}
-.main{display:grid;gap:22px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.full{grid-column:1/-1}
-.card h2{margin-top:0;color:var(--azul-oscuro)}label{display:block;margin-top:16px;margin-bottom:7px;font-weight:bold}
-input,select,textarea{width:100%;padding:14px;border:1px solid var(--borde);border-radius:14px;font-size:16px}textarea{min-height:90px}
-.boton{width:100%;margin-top:20px;padding:16px;border:0;border-radius:16px;background:linear-gradient(135deg,var(--azul),var(--azul-oscuro));color:white;font-size:17px;font-weight:bold;cursor:pointer}.boton-secundario{background:white;color:var(--azul);border:1px solid var(--azul)}
-.necesidades{display:grid;grid-template-columns:1fr 1fr;gap:12px}.item-necesidad{display:grid;grid-template-columns:1fr 45px 56px 45px;align-items:center;gap:8px;background:#f5f9ff;border:1px solid var(--borde);border-radius:16px;padding:12px}.item-necesidad span{font-weight:bold}.item-necesidad button{border:0;border-radius:12px;background:var(--azul);color:white;height:40px;font-weight:bold;font-size:20px}.item-necesidad input{text-align:center;padding:10px;font-weight:bold}
-.aviso{margin-top:18px;padding:13px;border-radius:14px;display:none;font-weight:bold}.aviso.ok{display:block;background:#e9f9ef;color:var(--verde)}.aviso.error{display:block;background:#fff0f0;color:var(--rojo)}
-.resumen,.pruebas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.stat,.prueba-card,.resultado-card{background:#f5f9ff;border:1px solid var(--borde);border-radius:18px;padding:18px}.stat strong{display:block;font-size:30px;color:var(--azul)}
-.prueba-card h3{margin:0 0 8px}.acciones{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.acciones button{border:0;border-radius:12px;padding:10px 12px;font-weight:bold;cursor:pointer}.azul{background:var(--azul);color:white}.rojo{background:#fff0f0;color:#c82121}.blanco{background:white;color:var(--azul);border:1px solid var(--azul)!important}
-.detalle,.resultados{display:none}.detalle.visible,.resultados.visible{display:block}.categoria-titulo{margin-top:20px;padding-top:15px;border-top:1px solid var(--borde);color:var(--azul-oscuro)}
-@media(max-width:950px){.layout,.grid,.necesidades,.resumen,.pruebas-grid{grid-template-columns:1fr}}
+
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#e8f3ff,#ffffff);
+    color:var(--texto);
+}
+
+.app{
+    max-width:1250px;
+    margin:auto;
+    padding:25px;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    gap:24px;
+}
+
+.sidebar{
+    background:white;
+    border:1px solid var(--borde);
+    border-radius:26px;
+    padding:24px;
+    box-shadow:0 12px 35px rgba(0,70,160,.10);
+    height:max-content;
+}
+
+.logo{
+    background:linear-gradient(135deg,var(--azul),var(--azul-oscuro));
+    color:white;
+    border-radius:20px;
+    padding:22px;
+    margin-bottom:22px;
+}
+
+.logo h2{
+    margin:0;
+}
+
+.logo p{
+    margin:6px 0 0;
+    opacity:.9;
+}
+
+.menu a,
+.menu button{
+    width:100%;
+    display:block;
+    text-align:left;
+    border:0;
+    background:#f5f9ff;
+    color:var(--texto);
+    padding:14px;
+    border-radius:14px;
+    margin-bottom:10px;
+    font-weight:bold;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+.menu a.activo{
+    background:linear-gradient(135deg,var(--azul),var(--azul-oscuro));
+    color:white;
+}
+
+.main{
+    display:grid;
+    gap:22px;
+}
+
+.cabecera{
+    background:linear-gradient(135deg,var(--azul),var(--azul-oscuro));
+    color:white;
+    border-radius:28px;
+    padding:30px;
+    box-shadow:0 20px 50px rgba(0,70,160,.20);
+}
+
+.cabecera h1{
+    margin:0;
+    font-size:34px;
+}
+
+.cabecera p{
+    margin:8px 0 0;
+    opacity:.9;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+}
+
+.card{
+    background:white;
+    border-radius:24px;
+    padding:25px;
+    box-shadow:0 12px 35px rgba(0,70,160,.10);
+    border:1px solid var(--borde);
+}
+
+.card h2{
+    margin-top:0;
+    color:var(--azul-oscuro);
+}
+
+.full{
+    grid-column:1 / -1;
+}
+
+label{
+    display:block;
+    margin-top:16px;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+input, select, textarea{
+    width:100%;
+    padding:14px;
+    border:1px solid var(--borde);
+    border-radius:14px;
+    font-size:16px;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.coords{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.boton{
+    width:100%;
+    margin-top:20px;
+    padding:16px;
+    border:0;
+    border-radius:16px;
+    background:linear-gradient(135deg,var(--azul),var(--azul-oscuro));
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.boton-secundario{
+    background:white;
+    color:var(--azul);
+    border:1px solid var(--azul);
+}
+
+.necesidades{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.item-necesidad{
+    display:grid;
+    grid-template-columns:1fr 45px 56px 45px;
+    align-items:center;
+    gap:8px;
+    background:#f5f9ff;
+    border:1px solid var(--borde);
+    border-radius:16px;
+    padding:12px;
+}
+
+.item-necesidad span{
+    font-weight:bold;
+}
+
+.item-necesidad button{
+    border:0;
+    border-radius:12px;
+    background:var(--azul);
+    color:white;
+    height:40px;
+    font-weight:bold;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.item-necesidad input{
+    text-align:center;
+    padding:10px;
+    font-weight:bold;
+}
+
+.aviso{
+    margin-top:18px;
+    padding:13px;
+    border-radius:14px;
+    display:none;
+    font-weight:bold;
+}
+
+.aviso.ok{
+    display:block;
+    background:#e9f9ef;
+    color:var(--verde);
+}
+
+.aviso.error{
+    display:block;
+    background:#fff0f0;
+    color:var(--rojo);
+}
+
+.resumen{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.stat{
+    background:#f5f9ff;
+    border:1px solid var(--borde);
+    border-radius:18px;
+    padding:18px;
+}
+
+.stat strong{
+    display:block;
+    font-size:30px;
+    color:var(--azul);
+}
+
+@media(max-width:950px){
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .grid,
+    .necesidades,
+    .resumen,
+    .coords{
+        grid-template-columns:1fr;
+    }
+}
 </style>
 </head>
+
 <body>
-<div class="app"><div class="layout">
-<aside class="sidebar">
-<div class="logo"><h2>Organizador</h2><p>Bolsa de Oficiales</p></div>
-<nav class="menu">
-<a class="activo" href="organizador.html">🏠 Inicio</a>
-<a href="#crear-prueba">📅 Crear Prueba</a>
-<a href="#mis-pruebas">📋 Mis Pruebas</a>
-<button id="btnCerrarSesion" type="button">🚪 Cerrar sesión</button>
-</nav>
-</aside>
-<main class="main">
-<section class="cabecera"><h1>Panel Organizador</h1><p id="usuarioInfo">Comprobando sesión...</p></section>
-<section class="resumen">
-<div class="stat"><strong id="totalPruebas">0</strong><span>Pruebas creadas</span></div>
-<div class="stat"><strong id="totalNecesidades">0</strong><span>Puestos en formulario</span></div>
-<div class="stat"><strong id="totalOficiales">0</strong><span>Oficiales disponibles</span></div>
-</section>
-<div class="grid" id="crear-prueba">
-<section class="card"><h2>Datos de la prueba</h2>
-<label>Nombre</label><input id="nombrePrueba">
-<label>Tipo</label><select id="tipoPrueba"><option>Rally</option><option>Rallysprint</option><option>Montaña</option><option>Slalom</option><option>Karting</option><option>Regularidad</option><option>Circuito</option><option>Autocross</option><option>Drift</option><option>Otro</option></select>
-<label>Fecha</label><input id="fechaPrueba" type="date">
-<label>Provincia</label><input id="provinciaPrueba">
-<label>Municipio</label><input id="municipioPrueba">
-</section>
-<section class="card"><h2>Observaciones</h2><textarea id="observaciones"></textarea></section>
-<section class="card full"><h2>Personal necesario</h2><div class="necesidades" id="listaNecesidades"></div></section>
-<section class="card full"><button class="boton" id="btnGuardarPrueba">Guardar prueba</button><div class="aviso" id="aviso"></div></section>
+
+<div class="app">
+
+    <div class="layout">
+
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Organizador</h2>
+                <p>Bolsa de Oficiales</p>
+            </div>
+
+            <nav class="menu">
+                <a class="activo" href="organizador.html">🏠 Inicio</a>
+                <a href="#crear-prueba">📅 Crear Prueba</a>
+                <a href="#mis-pruebas">📋 Mis Pruebas</a>
+                <a href="#">👥 Oficiales</a>
+                <a href="#">⚙️ Perfil</a>
+                <button id="btnCerrarSesion" type="button">🚪 Cerrar sesión</button>
+            </nav>
+        </aside>
+
+        <main class="main">
+
+            <section class="cabecera">
+                <h1>Panel Organizador</h1>
+                <p id="usuarioInfo">Comprobando sesión...</p>
+            </section>
+
+            <section class="resumen">
+                <div class="stat">
+                    <strong id="totalPruebas">0</strong>
+                    <span>Pruebas creadas</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="totalNecesidades">0</strong>
+                    <span>Puestos solicitados</span>
+                </div>
+
+                <div class="stat">
+                    <strong id="estadoSistema">OK</strong>
+                    <span>Estado sistema</span>
+                </div>
+            </section>
+
+            <div class="grid" id="crear-prueba">
+
+                <section class="card">
+                    <h2>Datos de la prueba</h2>
+
+                    <label>Nombre de la prueba</label>
+                    <input id="nombrePrueba" placeholder="Ej: Rally Villa de Llanes">
+
+                    <label>Tipo de prueba</label>
+                    <select id="tipoPrueba">
+                        <option value="Rally">Rally</option>
+                        <option value="Rallysprint">Rallysprint</option>
+                        <option value="Montaña">Montaña</option>
+                        <option value="Slalom">Slalom</option>
+                        <option value="Karting">Karting</option>
+                        <option value="Regularidad">Regularidad</option>
+                        <option value="Circuito">Circuito</option>
+                        <option value="Autocross">Autocross</option>
+                        <option value="Drift">Drift</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+
+                    <label>Fecha</label>
+                    <input id="fechaPrueba" type="date">
+
+                    <label>Provincia</label>
+                    <input id="provinciaPrueba" placeholder="Provincia">
+
+                    <label>Municipio</label>
+                    <input id="municipioPrueba" placeholder="Municipio">
+                </section>
+
+                <section class="card">
+                    <h2>Ubicación</h2>
+
+                    <p>La ubicación permitirá ordenar más adelante los oficiales por cercanía.</p>
+
+                    <div class="coords">
+                        <div>
+                            <label>Latitud</label>
+                            <input id="latitud" placeholder="Ej: 43.3619">
+                        </div>
+
+                        <div>
+                            <label>Longitud</label>
+                            <input id="longitud" placeholder="Ej: -5.8494">
+                        </div>
+                    </div>
+
+                    <button class="boton boton-secundario" id="btnUbicacion" type="button">
+                        📍 Obtener ubicación GPS
+                    </button>
+
+                    <label>Observaciones</label>
+                    <textarea id="observaciones" placeholder="Horarios, punto de encuentro, notas internas..."></textarea>
+                </section>
+
+                <section class="card full">
+                    <h2>Personal necesario</h2>
+                    <p>Indica cuántas personas necesitas de cada categoría.</p>
+
+                    <div class="necesidades" id="listaNecesidades"></div>
+                </section>
+
+                <section class="card full">
+                    <button class="boton" id="btnGuardarPrueba" type="button">Guardar prueba en Firebase</button>
+                    <div class="aviso" id="aviso"></div>
+                </section>
+
+            </div>
+
+            <section class="card" id="mis-pruebas">
+                <h2>Mis Pruebas</h2>
+                <p>En la siguiente versión mostraremos aquí el listado completo de pruebas creadas.</p>
+                <div id="ultimasPruebas"></div>
+            </section>
+
+        </main>
+
+    </div>
+
 </div>
-<section class="card" id="mis-pruebas"><h2>Mis Pruebas</h2><div class="pruebas-grid" id="listaPruebas"></div></section>
-<section class="card detalle" id="detallePrueba"><h2>Detalle de prueba</h2><div id="contenidoDetalle"></div></section>
-<section class="card resultados" id="resultadosOficiales"><h2>Oficiales compatibles</h2><div id="contenidoResultados"></div></section>
-</main></div></div>
-<script type="module" src="js/organizador.js?v=2"></script>
+
+<script type="module" src="js/organizador.js?v=1"></script>
+
 </body>
 </html>
