@@ -200,7 +200,11 @@ async function cargarResumen(){
     if(!usuarioActual) return;
 
     try{
-        const q = query(collection(db, "pruebas"), where("organizadorUid", "==", usuarioActual.uid));
+        const q = query(
+            collection(db, "pruebas"),
+            where("organizadorUid", "==", usuarioActual.uid)
+        );
+
         const snap = await getDocs(q);
 
         document.getElementById("totalPruebas").innerText = snap.size;
@@ -208,16 +212,73 @@ async function cargarResumen(){
         const ultimas = document.getElementById("ultimasPruebas");
 
         if(snap.empty){
-            ultimas.innerHTML = "<p>Todavía no has creado pruebas.</p>";
+            ultimas.innerHTML = `
+                <p>Todavía no has creado pruebas.</p>
+            `;
             return;
         }
 
-        let html = "<ul>";
+        let html = "";
+
         snap.forEach(docu => {
             const p = docu.data();
-            html += `<li><strong>${p.nombre}</strong> · ${p.fecha} · ${p.municipio}</li>`;
+
+            html += `
+                <div style="
+                    background:#f5f9ff;
+                    border:1px solid #d8e3f0;
+                    border-radius:18px;
+                    padding:18px;
+                    margin-bottom:14px;
+                ">
+                    <h3 style="margin:0 0 10px;color:#063c8f;">
+                        🏁 ${p.nombre || "Prueba sin nombre"}
+                    </h3>
+
+                    <p style="margin:5px 0;">
+                        📅 <strong>Fecha:</strong> ${p.fecha || "Sin fecha"}
+                    </p>
+
+                    <p style="margin:5px 0;">
+                        📍 <strong>Municipio:</strong> ${p.municipio || ""}
+                    </p>
+
+                    <p style="margin:5px 0;">
+                        🗺️ <strong>Provincia:</strong> ${p.provincia || ""}
+                    </p>
+
+                    <p style="margin:5px 0;">
+                        📌 <strong>Estado:</strong> ${p.estado || "Borrador"}
+                    </p>
+
+                    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+                        <button type="button" style="
+                            border:0;
+                            background:#0b6bff;
+                            color:white;
+                            border-radius:12px;
+                            padding:10px 14px;
+                            font-weight:bold;
+                            cursor:pointer;
+                        ">
+                            Abrir
+                        </button>
+
+                        <button type="button" style="
+                            border:1px solid #0b6bff;
+                            background:white;
+                            color:#0b6bff;
+                            border-radius:12px;
+                            padding:10px 14px;
+                            font-weight:bold;
+                            cursor:pointer;
+                        ">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            `;
         });
-        html += "</ul>";
 
         ultimas.innerHTML = html;
 
@@ -225,7 +286,6 @@ async function cargarResumen(){
         console.error(error);
     }
 }
-
 document.getElementById("btnGuardarPrueba").addEventListener("click", guardarPrueba);
 document.getElementById("btnUbicacion").addEventListener("click", obtenerUbicacion);
 document.getElementById("btnCerrarSesion").addEventListener("click", async () => {
