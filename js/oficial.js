@@ -50,7 +50,7 @@ function cargarFormulario(data){
 
 async function cargarPerfil(){
     const ref = doc(db, "oficiales", usuarioActual.uid);
-    c onst snap = await getDoc(ref);
+    const snap = await getDoc(ref);
     if(snap.exists()){
         cargarFormulario(snap.data());
     }else{
