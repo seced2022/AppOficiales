@@ -111,7 +111,23 @@ if(btnEntrar){
 
             const datos = documento.data();
 
-            mostrarAviso("avisoLogin", "Acceso correcto. Rol: " + datos.rol, "ok");
+            mostrarAviso("avisoLogin", "Acceso correcto. Redirigiendo...", "ok");
+
+setTimeout(() => {
+
+    if(datos.rol === "admin"){
+        window.location.href = "admin.html";
+    }
+
+    else if(datos.rol === "organizador"){
+        window.location.href = "organizador.html";
+    }
+
+    else{
+        window.location.href = "oficial.html";
+    }
+
+}, 1000);
 
         }catch(error){
             console.error(error);
