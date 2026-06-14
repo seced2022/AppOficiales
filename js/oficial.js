@@ -77,6 +77,8 @@ async function guardarPerfil(){
         licenciaVigente: document.getElementById("licenciaVigente").value === "true",
         observaciones: document.getElementById("observaciones").value.trim(),
         actualizadoEn: serverTimestamp()
+        federacion: document.getElementById("federacion").value,
+        numeroLicencia: document.getElementById("numeroLicencia").value.trim(), 
     };
     try{
         await setDoc(doc(db, "oficiales", usuarioActual.uid), data, { merge:true });
