@@ -33,18 +33,21 @@ function generarIdOficial(uid){ return "OF-" + uid.slice(0, 6).toUpperCase(); }
 
 function cargarFormulario(data){
     ["idOficial","nombre","apellidos","dni","fechaNacimiento","email","telefono","provincia","municipio","codigoPostal","vehiculoPropio","distanciaMaxima","observaciones"].forEach(id=>{
-        if(document.getElementById(id)) document.getElementById(id).value = data[id] || document.getElementById(id).value || "";
+        if(document.getElementById(id)) {
+            document.getElementById(id).value = data[id] || document.getElementById(id).value || "";
+        }
     });
+
     document.getElementById("disponible").value = String(data.disponible ?? true);
     document.getElementById("licenciaVigente").value = String(data.licenciaVigente ?? true);
+
+    document.getElementById("federacion").value = data.federacion || "";
+    document.getElementById("numeroLicencia").value = data.numeroLicencia || "";
+
     marcarSeleccionados("licenciasOficiales", data.licenciasOficiales || []);
     marcarSeleccionados("personalApoyo", data.personalApoyo || []);
-    document.getElementById("federacion").value =
-    data.federacion || "";
-
-    document.getElementById("numeroLicencia").value =
-     data.numeroLicencia || "";
 }
+
 async function cargarPerfil(){
     const ref = doc(db, "oficiales", usuarioActual.uid);
     c onst snap = await getDoc(ref);
@@ -83,7 +86,7 @@ async function guardarPerfil(){
         observaciones: document.getElementById("observaciones").value.trim(),
         federacion: document.getElementById("federacion").value,
         numeroLicencia: document.getElementById("numeroLicencia").value.trim(),
-        actualizadoEn: serverTimestamp()
+        actualizadoEn: serverTimestamp(),
     };
     try{
         await setDoc(doc(db, "oficiales", usuarioActual.uid), data, { merge:true });
