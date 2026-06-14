@@ -39,6 +39,11 @@ function cargarFormulario(data){
     document.getElementById("licenciaVigente").value = String(data.licenciaVigente ?? true);
     marcarSeleccionados("licenciasOficiales", data.licenciasOficiales || []);
     marcarSeleccionados("personalApoyo", data.personalApoyo || []);
+    document.getElementById("federacion").value =
+    datos.federacion || "";
+
+    document.getElementById("numeroLicencia").value =
+    datos.numeroLicencia || "";
 }
 async function cargarPerfil(){
     const ref = doc(db, "oficiales", usuarioActual.uid);
