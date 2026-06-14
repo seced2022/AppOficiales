@@ -1,19 +1,79 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Panel Oficial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Oficial - Bolsa de Oficiales</title>
+<style>
+:root{--azul:#0b6bff;--azul-oscuro:#063c8f;--texto:#102033;--borde:#d8e3f0}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Arial,sans-serif;background:linear-gradient(135deg,#e8f3ff,#fff);color:var(--texto)}
+.app{max-width:1150px;margin:auto;padding:25px}
+.cabecera{background:linear-gradient(135deg,var(--azul),var(--azul-oscuro));color:white;border-radius:28px;padding:30px;margin-bottom:25px;box-shadow:0 20px 50px rgba(0,70,160,.20)}
+.cabecera h1{margin:0;font-size:34px}.cabecera p{margin:8px 0 0;opacity:.9}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.card{background:white;border-radius:24px;padding:25px;box-shadow:0 12px 35px rgba(0,70,160,.10);border:1px solid var(--borde)}
+.card h2{margin-top:0;color:var(--azul-oscuro)}
+label{display:block;margin-top:16px;margin-bottom:7px;font-weight:bold}
+input,select,textarea{width:100%;padding:14px;border:1px solid var(--borde);border-radius:14px;font-size:16px}
+textarea{min-height:90px;resize:vertical}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.check{background:#f5f9ff;border:1px solid var(--borde);border-radius:14px;padding:12px;display:flex;gap:9px;align-items:center;font-weight:bold}
+.check input{width:auto}
+.boton{width:100%;margin-top:25px;padding:16px;border:0;border-radius:16px;background:linear-gradient(135deg,var(--azul),var(--azul-oscuro));color:white;font-size:17px;font-weight:bold;cursor:pointer}
+.aviso{margin-top:18px;padding:13px;border-radius:14px;display:none;font-weight:bold}
+.aviso.ok{display:block;background:#e9f9ef;color:#137a34}.aviso.error{display:block;background:#fff0f0;color:#c82121}
+.full{grid-column:1/-1}.top-actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+.top-actions a,.top-actions button{background:white;color:var(--azul-oscuro);border:0;border-radius:12px;padding:11px 15px;font-weight:bold;text-decoration:none;cursor:pointer}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.check-grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-
-<h1>Panel Oficial</h1>
-
-<p>Bienvenido oficial.</p>
-
-<button onclick="location.href='login.html'">
-Cerrar sesión
-</button>
-
+<div class="app">
+<section class="cabecera">
+<h1>Panel del Oficial</h1>
+<p id="usuarioInfo">Comprobando sesión...</p>
+<div class="top-actions">
+<a href="login.html">Volver al login</a>
+<button id="btnCerrarSesion" type="button">Cerrar sesión</button>
+</div>
+</section>
+<div class="grid">
+<section class="card">
+<h2>Datos personales</h2>
+<label>ID Oficial</label><input id="idOficial" placeholder="Se genera automáticamente" readonly>
+<label>Nombre</label><input id="nombre" placeholder="Nombre">
+<label>Apellidos</label><input id="apellidos" placeholder="Apellidos">
+<label>DNI</label><input id="dni" placeholder="DNI">
+<label>Fecha de nacimiento</label><input id="fechaNacimiento" type="date">
+</section>
+<section class="card">
+<h2>Contacto y zona</h2>
+<label>Email</label><input id="email" placeholder="Email">
+<label>Teléfono</label><input id="telefono" placeholder="Teléfono">
+<label>Provincia</label><input id="provincia" placeholder="Provincia">
+<label>Municipio</label><input id="municipio" placeholder="Municipio">
+<label>Código Postal</label><input id="codigoPostal" placeholder="Código Postal">
+</section>
+<section class="card full"><h2>Licencias de Oficial</h2><div class="check-grid" id="licenciasOficiales"></div></section>
+<section class="card full"><h2>Personal de Apoyo</h2><div class="check-grid" id="personalApoyo"></div></section>
+<section class="card">
+<h2>Desplazamiento</h2>
+<label>Vehículo propio</label><select id="vehiculoPropio"><option value="si">Sí</option><option value="no">No</option></select>
+<label>Distancia máxima</label><select id="distanciaMaxima"><option value="50">50 km</option><option value="100">100 km</option><option value="200">200 km</option><option value="500">500 km</option><option value="toda_espana">Toda España</option></select>
+</section>
+<section class="card">
+<h2>Disponibilidad</h2>
+<label>Disponible actualmente</label><select id="disponible"><option value="true">Sí</option><option value="false">No</option></select>
+<label>Licencia vigente</label><select id="licenciaVigente"><option value="true">Sí</option><option value="false">No</option></select>
+<label>Observaciones</label><textarea id="observaciones" placeholder="Observaciones"></textarea>
+</section>
+<section class="card full">
+<button class="boton" id="btnGuardar" type="button">Guardar perfil</button>
+<div class="aviso" id="aviso"></div>
+</section>
+</div>
+</div>
+<script type="module" src="js/oficial.js?v=1"></script>
 </body>
 </html>
