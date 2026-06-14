@@ -40,14 +40,14 @@ function cargarFormulario(data){
     marcarSeleccionados("licenciasOficiales", data.licenciasOficiales || []);
     marcarSeleccionados("personalApoyo", data.personalApoyo || []);
     document.getElementById("federacion").value =
-    datos.federacion || "";
+    data.federacion || "";
 
     document.getElementById("numeroLicencia").value =
-    datos.numeroLicencia || "";
+     data.numeroLicencia || "";
 }
 async function cargarPerfil(){
     const ref = doc(db, "oficiales", usuarioActual.uid);
-    const snap = await getDoc(ref);
+    c onst snap = await getDoc(ref);
     if(snap.exists()){
         cargarFormulario(snap.data());
     }else{
@@ -81,9 +81,9 @@ async function guardarPerfil(){
         disponible: document.getElementById("disponible").value === "true",
         licenciaVigente: document.getElementById("licenciaVigente").value === "true",
         observaciones: document.getElementById("observaciones").value.trim(),
-        actualizadoEn: serverTimestamp()
         federacion: document.getElementById("federacion").value,
-        numeroLicencia: document.getElementById("numeroLicencia").value.trim(), 
+        numeroLicencia: document.getElementById("numeroLicencia").value.trim(),
+        actualizadoEn: serverTimestamp()
     };
     try{
         await setDoc(doc(db, "oficiales", usuarioActual.uid), data, { merge:true });
