@@ -292,30 +292,24 @@ async function cargarResumen(){
                     </p>
 
                     <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
-                        <button type="button" style="
-                            border:0;
-                            background:#0b6bff;
-                            color:white;
-                            border-radius:12px;
-                            padding:10px 14px;
-                            font-weight:bold;
-                            cursor:pointer;
-                        ">
-                            Abrir
-                        <button
-    type="button"
-    onclick="abrirPrueba(window.pruebasGuardadas[${indice}])"
-    style="
-        border:0;
-        background:#0b6bff;
-        color:white;
-        border-radius:12px;
-        padding:10px 14px;
-        font-weight:bold;
-        cursor:pointer;
-    ">
-    Abrir
-</button>
+
+    <button
+        type="button"
+        onclick="abrirPrueba(window.pruebasGuardadas[${indice}])"
+        style="
+            border:0;
+            background:#0b6bff;
+            color:white;
+            border-radius:12px;
+            padding:10px 14px;
+            font-weight:bold;
+            cursor:pointer;
+        ">
+        Abrir
+    </button>
+
+</div>
+                    
                     </div>
                 </div>
             `;
