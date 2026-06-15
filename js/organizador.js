@@ -223,6 +223,52 @@ async function buscarOficialesCompatibles(prueba){
 
 window.buscarOficialesCompatibles = buscarOficialesCompatibles;
 
+async function seleccionarOficial(prueba, oficial, coincidencias, boton){
+
+    if(!prueba || !oficial){
+        alert("Faltan datos para seleccionar.");
+        return;
+    }
+
+    try{
+        boton.disabled = true;
+        boton.innerText = "Guardando...";
+
+        const idPreseleccion = prueba.id + "_" + oficial.uid;
+
+        await setDoc(doc(db, "preselecciones", idPreseleccion), {
+            pruebaId: prueba.id,
+            pruebaNombre: prueba.nombre,
+            pruebaFecha: prueba.fecha,
+            pruebaMunicipio: prueba.municipio,
+            pruebaProvincia: prueba.provincia,
+
+            organizadorUid: usuarioActual.uid,
+            organizadorEmail: usuarioActual.email,
+
+            oficialUid: oficial.uid,
+            idOficial: oficial.idOficial,
+
+            categoriasCoincidentes: coincidencias,
+            estado: "Preseleccionado",
+
+            fechaCreacion: serverTimestamp()
+        });
+
+        boton.innerText = "✓ Seleccionado";
+        boton.style.background = "#137a34";
+        boton.style.color = "white";
+
+    }catch(error){
+        console.error(error);
+        boton.disabled = false;
+        boton.innerText = "Seleccionar";
+        alert("Error al seleccionar: " + error.code);
+    }
+}
+
+window.seleccionarOficial = seleccionarOficial;
+
 async function eliminarPrueba(idPrueba){
 
     const confirmar = confirm(
