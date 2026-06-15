@@ -190,22 +190,55 @@ async function buscarOficialesCompatibles(prueba){
                 encontrados++;
 
                 html += `
-                    <div style="
-                        background:#f5f9ff;
-                        border:1px solid #d8e3f0;
-                        border-radius:14px;
-                        padding:14px;
-                        margin-bottom:10px;
-                    ">
-                        <strong>${oficial.idOficial || "Sin ID"}</strong>
-                        <p style="margin:5px 0;">
-                            📍 ${oficial.municipio || ""}, ${oficial.provincia || ""}
-                        </p>
-                        <p style="margin:5px 0;">
-                            Coincide: ${coincidencias.join(", ")}
-                        </p>
-                    </div>
-                `;
+    <div style="
+        background:#f5f9ff;
+        border:1px solid #d8e3f0;
+        border-radius:14px;
+        padding:14px;
+        margin-bottom:10px;
+    ">
+
+        <strong>${oficial.idOficial || "Sin ID"}</strong>
+
+        <p style="margin:5px 0;">
+            📍 ${oficial.municipio || ""}, ${oficial.provincia || ""}
+        </p>
+
+        <p style="margin:5px 0;">
+            🚗 Vehículo propio: ${oficial.vehiculoPropio || "No indicado"}
+        </p>
+
+        <p style="margin:5px 0;">
+            📏 Distancia máxima: ${oficial.distanciaMaxima || "No indicada"} km
+        </p>
+
+        <p style="margin:5px 0;">
+            Coincide: ${coincidencias.join(", ")}
+        </p>
+
+        <button
+            type="button"
+            onclick='seleccionarOficial(
+                window.pruebaAbierta,
+                ${JSON.stringify(oficial).replace(/'/g,"&#39;")},
+                ${JSON.stringify(coincidencias).replace(/'/g,"&#39;")},
+                this
+            )'
+            style="
+                margin-top:10px;
+                border:0;
+                background:#0b6bff;
+                color:white;
+                border-radius:12px;
+                padding:10px 14px;
+                font-weight:bold;
+                cursor:pointer;
+            ">
+            Seleccionar
+        </button>
+
+    </div>
+`;
             }
         });
 
