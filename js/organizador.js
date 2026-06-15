@@ -105,6 +105,40 @@ function actualizarTotalNecesidades(){
     document.getElementById("totalNecesidades").innerText = total;
 }
 
+function abrirPrueba(prueba){
+
+    const detalle = document.getElementById("detallePrueba");
+
+    let necesidadesHtml = "";
+
+    if(prueba.necesidades){
+        Object.entries(prueba.necesidades).forEach(([categoria,cantidad]) => {
+            necesidadesHtml += `
+                <li>
+                    ${categoria}: <strong>${cantidad}</strong>
+                </li>
+            `;
+        });
+    }
+
+    detalle.innerHTML = `
+        <h2>🏁 ${prueba.nombre}</h2>
+
+        <p><strong>Tipo:</strong> ${prueba.tipo}</p>
+        <p><strong>Fecha:</strong> ${prueba.fecha}</p>
+        <p><strong>Municipio:</strong> ${prueba.municipio}</p>
+        <p><strong>Provincia:</strong> ${prueba.provincia}</p>
+
+        <h3>Necesidades</h3>
+
+        <ul>
+            ${necesidadesHtml}
+        </ul>
+    `;
+
+    detalle.style.display = "block";
+}
+
 function mostrarAviso(mensaje, tipo){
     const aviso = document.getElementById("aviso");
     aviso.style.display = "block";
