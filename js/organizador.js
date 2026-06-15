@@ -116,9 +116,7 @@ function abrirPrueba(prueba){
     if(prueba.necesidades){
         Object.entries(prueba.necesidades).forEach(([categoria,cantidad]) => {
             necesidadesHtml += `
-                <li>
-                    ${categoria}: <strong>${cantidad}</strong>
-                </li>
+                <li>${categoria}: <strong>${cantidad}</strong></li>
             `;
         });
     }
@@ -132,16 +130,97 @@ function abrirPrueba(prueba){
         <p><strong>Provincia:</strong> ${prueba.provincia}</p>
 
         <h3>Necesidades</h3>
+        <ul>${necesidadesHtml}</ul>
 
-        <ul>
-            ${necesidadesHtml}
-        </ul>
+        <button
+            type="button"
+            onclick="buscarOficialesCompatibles(window.pruebaAbierta)"
+            style="
+                border:0;
+                background:#0b6bff;
+                color:white;
+                border-radius:12px;
+                padding:12px 16px;
+                font-weight:bold;
+                cursor:pointer;
+                margin-top:12px;
+            ">
+            Buscar oficiales compatibles
+        </button>
+
+        <div id="resultadosOficiales" style="margin-top:20px;"></div>
     `;
 
+    window.pruebaAbierta = prueba;
     detalle.style.display = "block";
 }
 
 window.abrirPrueba = abrirPrueba;
+
+async function buscarOficialesCompatibles(prueba){
+
+    const resultados = document.getElementById("resultadosOficiales");
+    resultados.innerHTML = "<p>Buscando oficiales compatibles...</p>";
+
+    const categoriasNecesarias = Object.keys(prueba.necesidades || {});
+
+    try{
+        const snap = await getDocs(collection(db, "oficiales"));
+
+        let html = "<h3>Oficiales compatibles</h3>";
+        let encontrados = 0;
+
+        snap.forEach(docu => {
+            const oficial = docu.data();
+
+            if(oficial.disponible !== true) return;
+            if(oficial.licenciaVigente !== true) return;
+
+            const categoriasOficial = [
+                ...(oficial.licenciasOficiales || []),
+                ...(oficial.personalApoyo || [])
+            ];
+
+            const coincidencias = categoriasNecesarias.filter(cat =>
+                categoriasOficial.includes(cat)
+            );
+
+            if(coincidencias.length > 0){
+                encontrados++;
+
+                html += `
+                    <div style="
+                        background:#f5f9ff;
+                        border:1px solid #d8e3f0;
+                        border-radius:14px;
+                        padding:14px;
+                        margin-bottom:10px;
+                    ">
+                        <strong>${oficial.idOficial || "Sin ID"}</strong>
+                        <p style="margin:5px 0;">
+                            📍 ${oficial.municipio || ""}, ${oficial.provincia || ""}
+                        </p>
+                        <p style="margin:5px 0;">
+                            Coincide: ${coincidencias.join(", ")}
+                        </p>
+                    </div>
+                `;
+            }
+        });
+
+        if(encontrados === 0){
+            html += "<p>No se encontraron oficiales compatibles.</p>";
+        }
+
+        resultados.innerHTML = html;
+
+    }catch(error){
+        console.error(error);
+        resultados.innerHTML = "<p>Error buscando oficiales.</p>";
+    }
+}
+
+window.buscarOficialesCompatibles = buscarOficialesCompatibles;
 
 async function eliminarPrueba(idPrueba){
 
