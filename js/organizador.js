@@ -170,6 +170,8 @@ async function buscarOficialesCompatibles(prueba){
 
         let html = "<h3>Oficiales compatibles</h3>";
         let encontrados = 0;
+        window.oficialesCompatibles = [];
+        window.coincidenciasCompatibles = [];
 
         snap.forEach(docu => {
             const oficial = docu.data();
@@ -188,6 +190,8 @@ async function buscarOficialesCompatibles(prueba){
 
             if(coincidencias.length > 0){
                 encontrados++;
+                window.oficialesCompatibles.push(oficial);
+                window.coincidenciasCompatibles.push(coincidencias);
 
                 html += `
     <div style="
@@ -220,9 +224,10 @@ async function buscarOficialesCompatibles(prueba){
             type="button"
             onclick='seleccionarOficial(
                 window.pruebaAbierta,
-                ${JSON.stringify(oficial).replace(/'/g,"&#39;")},
-                ${JSON.stringify(coincidencias).replace(/'/g,"&#39;")},
+                window.oficialesCompatibles[${encontrados - 1}],
+                window.coincidenciasCompatibles[${encontrados - 1}],
                 this
+
             )'
             style="
                 margin-top:10px;
