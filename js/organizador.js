@@ -302,25 +302,29 @@ async function cargarResumen(){
                             cursor:pointer;
                         ">
                             Abrir
-                        </button>
-
-                        <button type="button" style="
-                            border:1px solid #0b6bff;
-                            background:white;
-                            color:#0b6bff;
-                            border-radius:12px;
-                            padding:10px 14px;
-                            font-weight:bold;
-                            cursor:pointer;
-                        ">
-                            Eliminar
-                        </button>
+                        <button
+    type="button"
+    onclick="abrirPrueba(window.pruebasGuardadas[${indice}])"
+    style="
+        border:0;
+        background:#0b6bff;
+        color:white;
+        border-radius:12px;
+        padding:10px 14px;
+        font-weight:bold;
+        cursor:pointer;
+    ">
+    Abrir
+</button>
                     </div>
                 </div>
             `;
+       
+         indice++;
+        
         });
 
-        indice++;
+       
 
         ultimas.innerHTML = html;
 
