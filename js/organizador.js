@@ -11,7 +11,9 @@ import {
     getDocs,
     query,
     where,
-    serverTimestamp
+    serverTimestamp,
+    deleteDoc,
+    doc
 } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
 const CATEGORIAS = [
@@ -141,6 +143,42 @@ function abrirPrueba(prueba){
 
 window.abrirPrueba = abrirPrueba;
 
+async function eliminarPrueba(idPrueba){
+
+    const confirmar = confirm(
+        "¿Seguro que quieres eliminar esta prueba?"
+    );
+
+    if(!confirmar) return;
+
+    try{
+
+        await deleteDoc(
+            doc(db, "pruebas", idPrueba)
+        );
+
+        mostrarAviso(
+            "Prueba eliminada correctamente.",
+            "ok"
+        );
+
+        document.getElementById("detallePrueba").style.display = "none";
+
+        await cargarResumen();
+
+    }catch(error){
+
+        console.error(error);
+
+        mostrarAviso(
+            "Error al eliminar: " + error.code,
+            "error"
+        );
+    }
+}
+
+window.eliminarPrueba = eliminarPrueba;
+
 function mostrarAviso(mensaje, tipo){
     const aviso = document.getElementById("aviso");
     aviso.style.display = "block";
@@ -262,7 +300,8 @@ async function cargarResumen(){
 
         snap.forEach(docu => {
             const p = docu.data();
-
+            p.id = docu.id;
+            
             window.pruebasGuardadas.push(p);
 
             html += `
