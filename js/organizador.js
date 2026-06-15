@@ -349,6 +349,21 @@ async function cargarResumen(){
         Abrir
     </button>
 
+    <button
+    type="button"
+    onclick="eliminarPrueba(window.pruebasGuardadas[${indice}].id)"
+    style="
+        border:1px solid #d9534f;
+        background:white;
+        color:#d9534f;
+        border-radius:12px;
+        padding:10px 14px;
+        font-weight:bold;
+        cursor:pointer;
+    ">
+    Eliminar
+</button>
+
 </div>
                     
                     </div>
