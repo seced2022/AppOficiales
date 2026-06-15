@@ -254,8 +254,14 @@ async function cargarResumen(){
 
         let html = "";
 
+        window.pruebasGuardadas = [];
+        
+        let indice = 0;
+
         snap.forEach(docu => {
             const p = docu.data();
+
+            window.pruebasGuardadas.push(p);
 
             html += `
                 <div style="
@@ -313,6 +319,8 @@ async function cargarResumen(){
                 </div>
             `;
         });
+
+        indice++;
 
         ultimas.innerHTML = html;
 
