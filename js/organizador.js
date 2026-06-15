@@ -139,6 +139,8 @@ function abrirPrueba(prueba){
     detalle.style.display = "block";
 }
 
+window.abrirPrueba = abrirPrueba;
+
 function mostrarAviso(mensaje, tipo){
     const aviso = document.getElementById("aviso");
     aviso.style.display = "block";
