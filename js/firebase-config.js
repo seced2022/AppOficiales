@@ -4,14 +4,16 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth
 
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
 
+
 const firebaseConfig = {
-  apiKey: "AIzaSyATxYXL4Qvh8FYOso2L5sHIPg4Xx2EZpQs",
-  authDomain: "appoficiales-8acbd.firebaseapp.com",
-  projectId: "appoficiales-8acbd",
-  storageBucket: "appoficiales-8acbd.firebasestorage.app",
-  messagingSenderId: "483230341029",
-  appId: "1:483230341029:web:c9a4eecbf31946e3f9ba4c"
+  apiKey: "AIzaSyAIDbnO_g09VTwgeRSmxyTnSpdFUMrBOsQ",
+  authDomain: "g6k-bolsaoficiales-v2-pruebas.firebaseapp.com",
+  projectId: "g6k-bolsaoficiales-v2-pruebas",
+  storageBucket: "g6k-bolsaoficiales-v2-pruebas.firebasestorage.app",
+  messagingSenderId: "651345929642",
+  appId: "1:651345929642:web:b3fe4d091baaa83edb37d3"
 };
+
 
 const app = initializeApp(firebaseConfig);
 
